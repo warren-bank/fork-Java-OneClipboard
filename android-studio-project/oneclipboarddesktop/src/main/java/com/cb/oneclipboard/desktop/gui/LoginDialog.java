@@ -60,9 +60,9 @@ public class LoginDialog extends JDialog {
         final JButton btnLogin = new JButton("Login");
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String userName = textField.getText();
-                String password = String.valueOf(passwordField.getPassword());
-                if (userName.trim().length() == 0 || password.trim().length() == 0) {
+                String userName = textField.getText().trim();
+                String password = String.valueOf(passwordField.getPassword()).trim();
+                if (userName.length() == 0 || password.length() == 0) {
                     return;
                 }
                 LoginDialog.this.dispose();

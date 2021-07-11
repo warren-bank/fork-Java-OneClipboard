@@ -10,7 +10,7 @@ public class CipherManager {
     private String encryptionPassword;
 
     public CipherManager(String userName, String password) {
-        encryptionPassword = userName + password;
+        encryptionPassword = userName + ":" + password;
         encryptor.setPassword(encryptionPassword);
     }
 

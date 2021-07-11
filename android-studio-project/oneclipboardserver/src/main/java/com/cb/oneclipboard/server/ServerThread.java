@@ -38,8 +38,11 @@ public class ServerThread extends Thread {
       Message message;
       while ((message = (Message) objInputStream.readObject()) != null) {
         String abbMessageText = StringUtils.abbreviate(message.getText(), 10);
-        LOGGER.info(String.format("Received '%s' from %s@%s", abbMessageText, message.getUser().getUserName(),
-            getHostAddress()));
+        String abbSha256Hash  = StringUtils.abbreviate(message.getUser().getSha256Hash(), 10);
+        LOGGER.info(String.format(
+          "Received '%s' from %s:%s@%s",
+          abbMessageText, message.getUser().getUserName(), abbSha256Hash, getHostAddress()
+        ));
 
         if (message.getMessageType() == MessageType.REGISTER) {
           user = message.getUser();
