@@ -183,6 +183,8 @@ public class Client implements PropertyChangeListener {
         } else {
             // Write current PID to file.
             File lockFile = new File(lockFileName);
+            if (lockFile.exists())
+                lockFile.delete();
             lockFile.deleteOnExit();
             FileOutputStream fos = new FileOutputStream(lockFile);
             fos.write(String.valueOf(currentPid).getBytes());
@@ -198,7 +200,7 @@ public class Client implements PropertyChangeListener {
         if (lockFile.exists()) {
             int pid = getPID(lockFile);
             if (pid > 0) {
-                OsProcess process = monitor.processTree().find(getPID(lockFile));
+                OsProcess process = monitor.processTree().find(pid);
                 if (process != null && process.processInfo().getPid() == pid) {
                     isRunning = true;
                 }
