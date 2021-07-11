@@ -6,9 +6,10 @@ import android.app.PendingIntent;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.cb.oneclipboard.lib.*;
 import com.cb.oneclipboard.lib.socket.ClipboardConnector;
 import com.cb.oneclipboard.util.IntentUtil;
@@ -133,7 +134,7 @@ public class ClipboardApplication extends Application {
     public NotificationCompat.Builder getNotificationBuilder(Context context) {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, IntentUtil.getHomePageIntent(context), PendingIntent.FLAG_CANCEL_CURRENT);
 
-        notificationBuilder = new NotificationCompat.Builder(context)
+        notificationBuilder = new NotificationCompat.Builder(context, getPackageName())
                 .setContentTitle("Oneclipboard")
                 .setSmallIcon(R.drawable.logo)
                 .setContentIntent(pendingIntent)

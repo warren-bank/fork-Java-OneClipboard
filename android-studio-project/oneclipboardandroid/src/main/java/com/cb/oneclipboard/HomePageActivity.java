@@ -3,11 +3,11 @@ package com.cb.oneclipboard;
 import android.app.Activity;
 import android.content.*;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class HomePageActivity extends Activity {
 

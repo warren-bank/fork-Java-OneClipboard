@@ -7,9 +7,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import androidx.core.app.NotificationCompat;
 
 public class OneClipboardService extends Service {
   private static final String TAG = "OneClipboardService";

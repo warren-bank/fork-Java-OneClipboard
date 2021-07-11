@@ -11,6 +11,11 @@ android {
     buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "com.cb.oneclipboard"
         minSdkVersion 16
@@ -28,5 +33,6 @@ android {
 
 dependencies {
     implementation project(':oneclipboardlib')
-    implementation 'com.android.support:appcompat-v7:23.1.1'
+    implementation 'androidx.core:core:1.6.0'                                    // https://mvnrepository.com/artifact/androidx.core/core
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'  // https://mvnrepository.com/artifact/androidx.localbroadcastmanager/localbroadcastmanager
 }
