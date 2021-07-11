@@ -1,0 +1,9 @@
+https://www.klipartz.com/en/sticker-png-yddbp
+https://www.klipartz.com/en/sticker-png-yddbp/download?width=48
+  * license:
+    - free for non-commercial use
+  * GIMP:
+    - open as layer
+    - layer attributes:
+        X offset = 36px
+        Y offset = 57px
