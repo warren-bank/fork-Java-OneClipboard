@@ -1,0 +1,4 @@
+include ':oneclipboardlib'
+include ':oneclipboardserver'
+include ':oneclipboarddesktop'
+include ':oneclipboardandroid'
