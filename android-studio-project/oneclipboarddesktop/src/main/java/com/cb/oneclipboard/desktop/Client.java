@@ -28,8 +28,6 @@ public class Client implements PropertyChangeListener {
     static JavaSysMon monitor = new JavaSysMon();
     private static Client client = null;
     private static ApplicationUI ui = new ApplicationUI();
-    private static String serverAddress = null;
-    private static int serverPort;
     private static ScheduledExecutorService scheduler = null;
     private static CipherManager cipherManager = null;
     private static User user = null;
@@ -42,10 +40,10 @@ public class Client implements PropertyChangeListener {
         System.setProperty("java.util.logging.config.file", logFileLocation);
 
         client = new Client();
-        client.init(args);
+        client.init();
     }
 
-    public void init(String args[]) {
+    public void init() {
         //pipeSysoutToFile();
 
         try {
@@ -56,23 +54,9 @@ public class Client implements PropertyChangeListener {
 
         // Initialize properties
         ApplicationProperties.loadProperties(PROP_LIST, new DefaultPropertyLoader());
-        serverAddress = ApplicationProperties.getStringProperty("server");
-        serverPort = ApplicationProperties.getIntProperty("server_port");
-
-        if (args.length > 0) {
-            try {
-                serverPort = Integer.parseInt(args[0]);
-            } catch (Exception e) {
-            }
-        }
-
         propertyChangeSupport.addPropertyChangeListener(this);
 
-        if (prefs.getUsername() != null && prefs.getPassword() != null) {
-            setupAndStart();
-        } else {
-            ui.showLogin();
-        }
+        ui.showLogin();
     }
 
     @Override
@@ -83,6 +67,8 @@ public class Client implements PropertyChangeListener {
         switch (property) {
             case LOGIN:
                 Credentials credentials = (Credentials) evt.getNewValue();
+                prefs.setHost(credentials.getHost());
+                prefs.setPort(credentials.getPort());
                 prefs.setUsername(credentials.getUserName());
                 prefs.setPassword(credentials.getPassword());
                 setupAndStart();
@@ -137,8 +123,8 @@ public class Client implements PropertyChangeListener {
 
             // Listen for clipboard content from other clients
             clipboardConnector = new ClipboardConnector()
-                    .server(serverAddress)
-                    .port(serverPort)
+                    .server(prefs.getHost())
+                    .port(prefs.getPort())
                     .socketListener(new SocketListener() {
 
                         @Override
