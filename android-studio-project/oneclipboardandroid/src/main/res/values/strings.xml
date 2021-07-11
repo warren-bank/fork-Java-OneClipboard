@@ -2,11 +2,13 @@
 <resources>
 
     <string name="app_name">OneClipboard</string>
-    <string name="login_instruction">Enter any username/password but make sure all your other devices share the same.</string>
+    <string name="login_instruction">Enter any username/password pair, and enter the same combination on your other devices.</string>
     <string name="menu_quit">Quit</string>
     <string name="menu_logout">Log Out</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
+    <string name="server_host_label">Server Host</string>
+    <string name="server_port_label">Server Port</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
     <string name="login">Login</string>
     <string name="home_page_message">Current clipboard text:</string>
     <string name="hello_world">Hello world!</string>

@@ -22,29 +22,57 @@ public class MainActivity extends Activity {
         final ClipboardApplication app = ((ClipboardApplication) getApplicationContext());
 
         if (!OneClipboardService.isRunning) {
-            if (app.pref.getUsername() != null && app.pref.getPassword() != null) {
-                initAndStart();
-            } else {
-                setContentView(R.layout.login);
-                Button loginButton = (Button) findViewById(R.id.btnLogin);
-                loginButton.setOnClickListener(new View.OnClickListener() {
+            setContentView(R.layout.login);
 
-                    @Override
-                    public void onClick(View arg0) {
-                        TextView usernameField = (TextView) findViewById(R.id.usernameField);
-                        TextView passwordField = (TextView) findViewById(R.id.passwordField);
-                        String username = usernameField.getText().toString().trim();
-                        String password = passwordField.getText().toString().trim();
+            TextView serverHostField = (TextView) findViewById(R.id.serverHostField);
+            TextView serverPortField = (TextView) findViewById(R.id.serverPortField);
+            TextView usernameField   = (TextView) findViewById(R.id.usernameField);
+            TextView passwordField   = (TextView) findViewById(R.id.passwordField);
 
-                        if (username.length() > 0 && password.length() > 0) {
-                            app.pref.setUsername(username);
-                            app.pref.setPassword(password);
-                            initAndStart();
-                        }
+            if (app.pref.getHost() != null)
+                serverHostField.setText(app.pref.getHost());
+            else
+                serverHostField.setText(getString(R.string.server_host));
+
+            if (app.pref.getPort() != null)
+                serverPortField.setText(app.pref.getPort());
+            else
+                serverPortField.setText(getString(R.string.server_port));
+
+            if (app.pref.getUsername() != null)
+                usernameField.setText(app.pref.getUsername());
+
+            if (app.pref.getPassword() != null)
+                passwordField.setText(app.pref.getPassword());
+
+            Button loginButton = (Button) findViewById(R.id.btnLogin);
+            loginButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    String host     = serverHostField.getText().toString().trim();
+                    String port     = serverPortField.getText().toString().trim();
+                    String username = usernameField.getText().toString().trim();
+                    String password = passwordField.getText().toString().trim();
+
+                    int port_number;
+                    try {
+                        port_number = Integer.parseInt(port, 10);
+                    }
+                    catch(Exception e) {
+                        port_number = -1;
                     }
 
-                });
-            }
+                    if (host.length() > 0 && port_number > 0 && username.length() > 0 && password.length() > 0) {
+                        app.pref.setHost(host);
+                        app.pref.setPort(port);
+                        app.pref.setUsername(username);
+                        app.pref.setPassword(password);
+                        initAndStart();
+                    }
+                }
+
+            });
         } else {
             startActivity(IntentUtil.getHomePageIntent(this));
             finish();

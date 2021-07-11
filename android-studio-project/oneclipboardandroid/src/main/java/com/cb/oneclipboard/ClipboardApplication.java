@@ -23,8 +23,6 @@ public class ClipboardApplication extends Application {
     public static final int NOTIFICATION_ID = 1;
     public static final String CLIPBOARD_UPDATED = "clipboard_updated";
     private static final String TAG = ClipboardApplication.class.getName();
-    private static String serverAddress = null;
-    private static int serverPort;
     public Preferences pref = null;
     private ClipboardConnector clipboardConnector = null;
     private ClipboardListener clipboardListener = null;
@@ -38,10 +36,8 @@ public class ClipboardApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        pref          = new Preferences(this);
-        broadcaster   = LocalBroadcastManager.getInstance(this);
-        serverAddress = getString(R.string.server_host);
-        serverPort    = getResources().getInteger(R.integer.server_port);
+        pref        = new Preferences(this);
+        broadcaster = LocalBroadcastManager.getInstance(this);
     }
 
     public User getUser() {
@@ -88,8 +84,8 @@ public class ClipboardApplication extends Application {
         try {
             // Listen for clipboard content from other clients
             clipboardConnector = new ClipboardConnector()
-                    .server(serverAddress)
-                    .port(serverPort)
+                    .server(pref.getHost())
+                    .port(pref.getPortNumber())
                     .socketListener(new SocketListener() {
 
                         @Override

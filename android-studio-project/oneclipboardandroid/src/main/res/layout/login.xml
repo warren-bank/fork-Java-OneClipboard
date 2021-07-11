@@ -10,7 +10,6 @@
         android:background="#ffffff">
 
         <!-- Header Starts -->
-
         <LinearLayout
             android:id="@+id/header"
             android:layout_width="fill_parent"
@@ -20,7 +19,6 @@
             android:paddingTop="5dip">
 
             <!-- Logo Start -->
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +38,6 @@
         <!-- Header Ends -->
 
         <!-- Login Form -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,14 +46,42 @@
             android:orientation="vertical"
             android:padding="10dip">
 
-            <!-- Email Label -->
-
+            <!-- Server Host -->
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username"
+                android:text="@string/server_host_label"
                 android:textColor="#372c24"/>
+            <EditText
+                android:id="@+id/serverHostField"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
+                android:layout_marginTop="5dip"
+                android:singleLine="true"
+                android:inputType="text"/>
 
+            <!-- Server Port -->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/server_port_label"
+                android:textColor="#372c24"/>
+            <EditText
+                android:id="@+id/serverPortField"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
+                android:layout_marginTop="5dip"
+                android:singleLine="true"
+                android:inputType="text"/>
+
+            <!-- Username -->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username_label"
+                android:textColor="#372c24"/>
             <EditText
                 android:id="@+id/usernameField"
                 android:layout_width="fill_parent"
@@ -65,14 +90,13 @@
                 android:layout_marginTop="5dip"
                 android:singleLine="true"
                 android:inputType="text"/>
-            <!-- Password Label -->
 
+            <!-- Password -->
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/password"
+                android:text="@string/password_label"
                 android:textColor="#372c24"/>
-
             <EditText
                 android:id="@+id/passwordField"
                 android:layout_width="fill_parent"
@@ -80,20 +104,18 @@
                 android:layout_marginTop="5dip"
                 android:singleLine="true"
                 android:inputType="textPassword"/>
-            <!-- Login button -->
 
+            <!-- Login button -->
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:text="@string/login"/>
-            <!-- Link to Registration Screen -->
         </LinearLayout>
         <!-- Login Form Ends -->
 
         <!-- Footer Start -->
-
         <LinearLayout
             android:id="@+id/footer"
             android:layout_below="@id/login_container"

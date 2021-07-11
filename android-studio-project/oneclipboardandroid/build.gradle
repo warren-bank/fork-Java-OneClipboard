@@ -22,8 +22,8 @@ android {
         targetSdkVersion 28
         versionCode Integer.parseInt(project.versionCode, 10)
         versionName project.versionName
-        resValue("string",  "server_host", project.serverHostName)
-        resValue("integer", "server_port", project.serverPort)
+        resValue("string", "server_host", project.serverHostName)
+        resValue("string", "server_port", project.serverPort)
     }
 
     lintOptions {
