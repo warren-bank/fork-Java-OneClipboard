@@ -36,8 +36,11 @@ public class ClipboardApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        pref = new Preferences(this);
-        broadcaster = LocalBroadcastManager.getInstance(this);
+
+        pref          = new Preferences(this);
+        broadcaster   = LocalBroadcastManager.getInstance(this);
+        serverAddress = getString(R.string.server_host);
+        serverPort    = getResources().getInteger(R.integer.server_port);
     }
 
     public User getUser() {
