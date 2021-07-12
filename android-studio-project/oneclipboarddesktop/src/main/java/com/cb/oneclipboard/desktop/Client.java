@@ -5,8 +5,6 @@ import com.cb.oneclipboard.desktop.gui.ApplicationUI;
 import com.cb.oneclipboard.desktop.model.Credentials;
 import com.cb.oneclipboard.lib.*;
 import com.cb.oneclipboard.lib.socket.ClipboardConnector;
-import com.jezhumble.javasysmon.JavaSysMon;
-import com.jezhumble.javasysmon.OsProcess;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
@@ -25,7 +23,6 @@ public class Client implements PropertyChangeListener {
     private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
     public static ApplicationPropertyChangeSupport propertyChangeSupport = new ApplicationPropertyChangeSupport();
     static String lockFileName = System.getProperty("user.home") + File.separator + "oneclipboard.lock";
-    static JavaSysMon monitor = new JavaSysMon();
     private static Client client = null;
     private static ApplicationUI ui = new ApplicationUI();
     private static ScheduledExecutorService scheduler = null;
@@ -47,7 +44,7 @@ public class Client implements PropertyChangeListener {
         //pipeSysoutToFile();
 
         try {
-            lock();
+            SingleInstance.lock(lockFileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,59 +156,6 @@ public class Client implements PropertyChangeListener {
     public void stop() {
         scheduler.shutdownNow();
         clipboardConnector.close();
-    }
-
-    public void lock() throws Exception {
-        int currentPid = monitor.currentPid();
-        if (isRunning()) {
-            System.err.println("Application already running");
-            System.exit(0);
-        } else {
-            // Write current PID to file.
-            File lockFile = new File(lockFileName);
-            if (lockFile.exists())
-                lockFile.delete();
-            lockFile.deleteOnExit();
-            FileOutputStream fos = new FileOutputStream(lockFile);
-            fos.write(String.valueOf(currentPid).getBytes());
-            fos.flush();
-            fos.close();
-        }
-
-    }
-
-    public boolean isRunning() {
-        File lockFile = new File(lockFileName);
-        boolean isRunning = false;
-        if (lockFile.exists()) {
-            int pid = getPID(lockFile);
-            if (pid > 0) {
-                OsProcess process = monitor.processTree().find(pid);
-                if (process != null && process.processInfo().getPid() == pid) {
-                    isRunning = true;
-                }
-            }
-        }
-        return isRunning;
-    }
-
-    private int getPID(File lockFile) {
-        int pid = -1;
-        // Read PID
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(lockFile));
-            pid = Integer.parseInt(reader.readLine().trim());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                reader.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return pid;
     }
 
     private void send(Message message) {
