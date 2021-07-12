@@ -1,0 +1,76 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript {
+    dependencies {
+        classpath 'com.bmuschko:gradle-izpack-plugin:2.1'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.bmuschko.izpack'
+
+sourceCompatibility = 1.7
+applicationName     = 'OneClipboardDesktopClient'
+version             = project.versionName
+mainClassName       = "com.cb.oneclipboard.desktop.client.Client"
+
+dependencies {
+    implementation project(':OneClipboardLib')
+
+    izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.5'
+}
+
+sourceSets.main.resources.srcDirs = ['src/main/resources']
+sourceSets.main.java.srcDirs      = ['src/main/java']
+
+processResources {
+    filesMatching('**/config.properties') {
+        filter ReplaceTokens, tokens: [
+            "serverHostName" : project.serverHostName,
+            "serverPort"     : project.serverPort,
+            "version"        : project.versionName
+        ]
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title':   applicationName,
+            'Implementation-Version': version,
+            'Main-Class':             mainClassName
+        )
+    }
+}
+
+distZip {
+    dependsOn jar
+    archiveName applicationName + "-" + version + ".zip"
+    // Avoid parent directory in zip
+    eachFile { file ->
+        String path = file.relativePath
+        file.setPath(path.substring(path.indexOf("/") + 1, path.length()))
+    }
+}
+
+task izPackAssemble(type: Copy) {
+    from 'src/main/izpack'
+    into "$buildDir/assemble/izpack"
+}
+
+izpack {
+    izPackCreateInstaller.dependsOn distZip, izPackAssemble
+    appProperties = [
+            'app.name'           : applicationName,
+            'app.winStartScript' : "bin\\$applicationName" + '.bat',
+            'app.unixStartScript': "bin/$applicationName",
+            'app.archive.path'   : "$buildDir/distributions/$distZip.archiveName",
+            'app.author.name'    : project.authorName,
+            'app.author.email'   : project.authorEmail,
+            'app.website'        : project.appWebsite,
+            'app.version'        : project.versionName,
+            'app.logo'           : projectDir.absolutePath + File.separator + "resources" + File.separator + "logo.png",
+            'app.ico'            : projectDir.absolutePath + File.separator + "resources" + File.separator + "logo.ico"
+    ]
+}

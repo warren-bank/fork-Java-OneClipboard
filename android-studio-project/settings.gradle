@@ -1,4 +1,4 @@
 include ':OneClipboardLib'
-include ':OneClipboardServer'
-include ':OneClipboardDesktop'
-include ':OneClipboardAndroid'
+include ':OneClipboardDesktopServer'
+include ':OneClipboardDesktopClient'
+include ':OneClipboardAndroidClient'

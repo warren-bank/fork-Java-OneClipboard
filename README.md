@@ -37,38 +37,38 @@ A collection of collaborative apps to automatically sync clipboards on remote de
 
 # ================================================
 # generate:
-#   OneClipboardServer/build/distributions/OneClipboardServer-1.2.0.zip
-#   OneClipboardServer/build/distributions/OneClipboardServer-1.2.0-installer.jar
+#   OneClipboardDesktopServer/build/distributions/OneClipboardDesktopServer-1.2.0.zip
+#   OneClipboardDesktopServer/build/distributions/OneClipboardDesktopServer-1.2.0-installer.jar
 # ================================================
-./gradlew :OneClipboardServer:compileJava
-./gradlew :OneClipboardServer:processResources
-./gradlew :OneClipboardServer:izPackCreateInstaller
+./gradlew :OneClipboardDesktopServer:compileJava
+./gradlew :OneClipboardDesktopServer:processResources
+./gradlew :OneClipboardDesktopServer:izPackCreateInstaller
 
 # ================================================
 # generate:
-#   OneClipboardDesktop/build/distributions/OneClipboardDesktop-1.2.0.zip
-#   OneClipboardDesktop/build/distributions/OneClipboardDesktop-1.2.0-installer.jar
+#   OneClipboardDesktopClient/build/distributions/OneClipboardDesktopClient-1.2.0.zip
+#   OneClipboardDesktopClient/build/distributions/OneClipboardDesktopClient-1.2.0-installer.jar
 # ================================================
-./gradlew :OneClipboardDesktop:compileJava
-./gradlew :OneClipboardDesktop:processResources
-./gradlew :OneClipboardDesktop:izPackCreateInstaller
+./gradlew :OneClipboardDesktopClient:compileJava
+./gradlew :OneClipboardDesktopClient:processResources
+./gradlew :OneClipboardDesktopClient:izPackCreateInstaller
 
 # ================================================
 # generate:
-#   OneClipboardAndroid/build/outputs/apk/release/OneClipboardAndroid-release-unsigned.apk
+#   OneClipboardAndroidClient/build/outputs/apk/release/OneClipboardAndroidClient-release-unsigned.apk
 # ================================================
-./gradlew :OneClipboardAndroid:compileReleaseJavaWithJavac
-./gradlew :OneClipboardAndroid:assembleRelease
+./gradlew :OneClipboardAndroidClient:compileReleaseJavaWithJavac
+./gradlew :OneClipboardAndroidClient:assembleRelease
 
 # ================================================
 # generate:
-#   OneClipboardAndroid/build/outputs/apk/release/OneClipboardAndroid-release.apk
+#   OneClipboardAndroidClient/build/outputs/apk/release/OneClipboardAndroidClient-release.apk
 # ================================================
 source ~/load-android-keystore-credentials.sh
 
-apk_dir='OneClipboardAndroid/build/outputs/apk/release'
-apk_src="${apk_dir}/OneClipboardAndroid-release-unsigned.apk"
-apk_dst="${apk_dir}/OneClipboardAndroid-release.apk"
+apk_dir='OneClipboardAndroidClient/build/outputs/apk/release'
+apk_src="${apk_dir}/OneClipboardAndroidClient-release-unsigned.apk"
+apk_dst="${apk_dir}/OneClipboardAndroidClient-release.apk"
 
 apksigner sign                      \
   --v1-signing-enabled true         \
@@ -92,7 +92,7 @@ apksigner sign                      \
 1. desktop server:
    * with the installer:
      ```bash
-       java -jar /path/to/OneClipboardServer-1.2.0-installer.jar
+       java -jar /path/to/OneClipboardDesktopServer-1.2.0-installer.jar
 
        # (1) specify the directory where the .zip file should be uncompressed
        # (2) choose whether or not to create desktop shortcuts, and such
@@ -100,13 +100,13 @@ apksigner sign                      \
    * without the installer:
      ```bash
        # (1) manually uncompress the .zip file to a desired directory
-       destination_dir=~/PortableApps/OneClipboardServer
+       destination_dir=~/PortableApps/OneClipboardDesktopServer
 
        if [ ! -d  "$destination_dir" ];then
          mkdir -p "$destination_dir"
        fi
 
-       unzip /path/to/OneClipboardServer-1.2.0.zip -d "$destination_dir"
+       unzip /path/to/OneClipboardDesktopServer-1.2.0.zip -d "$destination_dir"
 
        # (2) this configuration is optional;
        # setting the "user.home" property to a directory path that is relative to the program
@@ -120,12 +120,12 @@ apksigner sign                      \
        export ONE_CLIPBOARD_SERVER_OPTS="-Duser.home=${portable_data_dir}"
 
        # (3) run the desktop server using the /bin script provided for the shell (bash or Windows cmd)
-       "${destination_dir}/bin/OneClipboardServer"
+       "${destination_dir}/bin/OneClipboardDesktopServer"
      ```
 2. desktop client:
    * with the installer:
      ```bash
-       java -jar /path/to/OneClipboardDesktop-1.2.0-installer.jar
+       java -jar /path/to/OneClipboardDesktopClient-1.2.0-installer.jar
 
        # (1) specify the directory where the .zip file should be uncompressed
        # (2) choose whether or not to create desktop shortcuts, and such
@@ -133,13 +133,13 @@ apksigner sign                      \
    * without the installer:
      ```bash
        # (1) manually uncompress the .zip file to a desired directory
-       destination_dir=~/PortableApps/OneClipboardDesktop
+       destination_dir=~/PortableApps/OneClipboardDesktopClient
 
        if [ ! -d  "$destination_dir" ];then
          mkdir -p "$destination_dir"
        fi
 
-       unzip /path/to/OneClipboardDesktop-1.2.0.zip -d "$destination_dir"
+       unzip /path/to/OneClipboardDesktopClient-1.2.0.zip -d "$destination_dir"
 
        # (2) this configuration is optional;
        # setting the "user.home" property to a directory path that is relative to the program
@@ -153,12 +153,12 @@ apksigner sign                      \
        export ONE_CLIPBOARD_DESKTOP_OPTS="-Duser.home=${portable_data_dir}"
 
        # (3) run the desktop client using the /bin script provided for the shell (bash or Windows cmd)
-       "${destination_dir}/bin/OneClipboardDesktop"
+       "${destination_dir}/bin/OneClipboardDesktopClient"
      ```
 3. Android client:
    * with adb
      ```bash
-       adb install 'OneClipboardAndroid/build/apk/OneClipboardAndroid-release.apk'
+       adb install 'OneClipboardAndroidClient/build/apk/OneClipboardAndroidClient-release.apk'
      ```
    * with httpd or ftpd
      - download apk to Android device
