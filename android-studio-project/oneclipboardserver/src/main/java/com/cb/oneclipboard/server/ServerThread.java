@@ -22,7 +22,10 @@ public class ServerThread extends Thread {
   public ServerThread(Socket socket) throws Exception {
     super("ServerThread");
     this.socket = socket;
-    LOGGER.info("Accepting connection from " + getHostAddress());
+    LOGGER.info(String.format(
+      "Accepting connection from %s",
+      getHostAddress()
+    ));
     start();
   }
 
@@ -49,8 +52,10 @@ public class ServerThread extends Thread {
         } else if (message.getMessageType() == MessageType.CLIPBOARD_TEXT && user != null) { // if we haven't received the register message than ignore the text messages
           for (ServerThread serverThread : Registery.getClientSockets()) {
             if (!this.socket.equals(serverThread.socket) && this.user.equals(serverThread.user)) {
-              LOGGER.info(String.format("Sending '%s' to %s@%s", abbMessageText,
-                  serverThread.user.getUserName(), serverThread.getHostAddress()));
+              LOGGER.info(String.format(
+                "Sending '%s' to %s@%s",
+                abbMessageText, serverThread.user.getUserName(), serverThread.getHostAddress()
+              ));
               try {
                 serverThread.send(message);
               } catch (Exception e) {
@@ -64,7 +69,15 @@ public class ServerThread extends Thread {
       }
 
     } catch (Exception e) {
-      LOGGER.log(Level.SEVERE, "Error reading stream", e);
+      if (e.getMessage() != null && e.getMessage().equals("Connection reset")) {
+        LOGGER.info(String.format(
+          "Lost connection to client: %s@%s",
+          user.getUserName(), getHostAddress()
+        ));
+      }
+      else {
+        LOGGER.log(Level.SEVERE, "Error reading stream", e);
+      }
       close();
     }
   }
@@ -89,7 +102,10 @@ public class ServerThread extends Thread {
       objOutputStream.close();
       socket.close();
     } catch (Exception e) {
-      LOGGER.log(Level.SEVERE, "Connection already closed for " + user.getUserName() + "@" + getHostAddress());
+      LOGGER.log(Level.SEVERE, String.format(
+        "Connection is already closed to client: %s@%s",
+        user.getUserName(), getHostAddress()
+      ));
     }
   }
 }
