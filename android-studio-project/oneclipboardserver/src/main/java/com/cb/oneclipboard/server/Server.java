@@ -34,10 +34,12 @@ public class Server {
             public void run() {
                 try {
                     serverSocket = new ServerSocket(serverPort);
-
-                    LOGGER.info("Server started on port " + serverPort);
+                    LOGGER.info("Server started on port: " + serverPort);
                 } catch (Exception e) {
-                    LOGGER.log(Level.SEVERE, "Could not start server", e);
+                    // Port is in use.
+                    // Probably indicates that an instance of this program is already running in a different process.
+
+                    LOGGER.severe("Error starting server. Could not listen on port: " + serverPort);
                     System.exit(-1);
                 }
 
@@ -51,12 +53,11 @@ public class Server {
                         try {
                             serverThread.close();
                         } catch (Exception ex) {
-                            LOGGER.log(Level.WARNING, "Unable to close server thread properly " + ex.getMessage());
+                            LOGGER.log(Level.WARNING, "Unable to close server thread properly:\n" + ex.getMessage());
                         }
-                        LOGGER.log(Level.WARNING, "Connection lost: " + e.getMessage());
+                        LOGGER.log(Level.WARNING, "Lost connection to client:\n" + e.getMessage());
                     }
                 }
-
             }
         }, "Startup Thread");
         startupThread.start();
