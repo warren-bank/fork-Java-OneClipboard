@@ -41,14 +41,18 @@ public class ServerThread extends Thread {
       Message message;
       while ((message = (Message) objInputStream.readObject()) != null) {
         String abbMessageText = StringUtils.abbreviate(message.getText(), 10);
-        String abbSha256Hash  = StringUtils.abbreviate(message.getUser().getSha256Hash(), 10);
         LOGGER.info(String.format(
-          "Received '%s' from %s:%s@%s",
-          abbMessageText, message.getUser().getUserName(), abbSha256Hash, getHostAddress()
+          "Received '%s' from %s@%s",
+          abbMessageText, message.getUser().getUserName(), getHostAddress()
         ));
 
         if (message.getMessageType() == MessageType.REGISTER) {
           user = message.getUser();
+
+          LOGGER.info(String.format(
+            "User SHA-256: %s",
+            StringUtils.abbreviate(user.getSha256Hash(), 40)
+          ));
         } else if (message.getMessageType() == MessageType.CLIPBOARD_TEXT && user != null) { // if we haven't received the register message than ignore the text messages
           for (ServerThread serverThread : Registery.getClientSockets()) {
             if (!this.socket.equals(serverThread.socket) && this.user.equals(serverThread.user)) {
