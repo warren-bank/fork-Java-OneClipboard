@@ -33,42 +33,42 @@ A collection of collaborative apps to automatically sync clipboards on remote de
 # ================================================
 # compile library shared by server and clients
 # ================================================
-./gradlew :oneclipboardlib:compileJava
+./gradlew :OneClipboardLib:compileJava
 
 # ================================================
 # generate:
-#   oneclipboardserver/build/distributions/OneClipboardServer-1.2.0.zip
-#   oneclipboardserver/build/distributions/oneclipboardserver-1.2.0-installer.jar
+#   OneClipboardServer/build/distributions/OneClipboardServer-1.2.0.zip
+#   OneClipboardServer/build/distributions/OneClipboardServer-1.2.0-installer.jar
 # ================================================
-./gradlew :oneclipboardserver:compileJava
-./gradlew :oneclipboardserver:processResources
-./gradlew :oneclipboardserver:izPackCreateInstaller
+./gradlew :OneClipboardServer:compileJava
+./gradlew :OneClipboardServer:processResources
+./gradlew :OneClipboardServer:izPackCreateInstaller
 
 # ================================================
 # generate:
-#   oneclipboarddesktop/build/distributions/OneClipboardDesktop-1.2.0.zip
-#   oneclipboarddesktop/build/distributions/oneclipboarddesktop-1.2.0-installer.jar
+#   OneClipboardDesktop/build/distributions/OneClipboardDesktop-1.2.0.zip
+#   OneClipboardDesktop/build/distributions/OneClipboardDesktop-1.2.0-installer.jar
 # ================================================
-./gradlew :oneclipboarddesktop:compileJava
-./gradlew :oneclipboarddesktop:processResources
-./gradlew :oneclipboarddesktop:izPackCreateInstaller
+./gradlew :OneClipboardDesktop:compileJava
+./gradlew :OneClipboardDesktop:processResources
+./gradlew :OneClipboardDesktop:izPackCreateInstaller
 
 # ================================================
 # generate:
-#   oneclipboardandroid/build/outputs/apk/release/oneclipboardandroid-release-unsigned.apk
+#   OneClipboardAndroid/build/outputs/apk/release/OneClipboardAndroid-release-unsigned.apk
 # ================================================
-./gradlew :oneclipboardandroid:compileReleaseJavaWithJavac
-./gradlew :oneclipboardandroid:assembleRelease
+./gradlew :OneClipboardAndroid:compileReleaseJavaWithJavac
+./gradlew :OneClipboardAndroid:assembleRelease
 
 # ================================================
 # generate:
-#   oneclipboardandroid/build/outputs/apk/release/oneclipboardandroid-release.apk
+#   OneClipboardAndroid/build/outputs/apk/release/OneClipboardAndroid-release.apk
 # ================================================
 source ~/load-android-keystore-credentials.sh
 
-apk_dir='oneclipboardandroid/build/outputs/apk/release'
-apk_src="${apk_dir}/oneclipboardandroid-release-unsigned.apk"
-apk_dst="${apk_dir}/oneclipboardandroid-release.apk"
+apk_dir='OneClipboardAndroid/build/outputs/apk/release'
+apk_src="${apk_dir}/OneClipboardAndroid-release-unsigned.apk"
+apk_dst="${apk_dir}/OneClipboardAndroid-release.apk"
 
 apksigner sign                      \
   --v1-signing-enabled true         \
@@ -92,7 +92,7 @@ apksigner sign                      \
 1. desktop server:
    * with the installer:
      ```bash
-       java -jar /path/to/oneclipboardserver-1.2.0-installer.jar
+       java -jar /path/to/OneClipboardServer-1.2.0-installer.jar
 
        # (1) specify the directory where the .zip file should be uncompressed
        # (2) choose whether or not to create desktop shortcuts, and such
@@ -125,7 +125,7 @@ apksigner sign                      \
 2. desktop client:
    * with the installer:
      ```bash
-       java -jar /path/to/oneclipboarddesktop-1.2.0-installer.jar
+       java -jar /path/to/OneClipboardDesktop-1.2.0-installer.jar
 
        # (1) specify the directory where the .zip file should be uncompressed
        # (2) choose whether or not to create desktop shortcuts, and such
@@ -158,7 +158,7 @@ apksigner sign                      \
 3. Android client:
    * with adb
      ```bash
-       adb install 'oneclipboardandroid/build/apk/oneclipboardandroid-release.apk'
+       adb install 'OneClipboardAndroid/build/apk/OneClipboardAndroid-release.apk'
      ```
    * with httpd or ftpd
      - download apk to Android device

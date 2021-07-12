@@ -16,7 +16,7 @@ version             = project.versionName
 mainClassName       = "com.cb.oneclipboard.desktop.Client"
 
 dependencies {
-    implementation project(':oneclipboardlib')
+    implementation project(':OneClipboardLib')
     implementation 'com.outr.javasysmon:javasysmon_2.10:0.3.4'
 
     izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.5'

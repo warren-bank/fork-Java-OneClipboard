@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    implementation project(':oneclipboardlib')
+    implementation project(':OneClipboardLib')
     implementation 'androidx.core:core:1.6.0'                                    // https://mvnrepository.com/artifact/androidx.core/core
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'  // https://mvnrepository.com/artifact/androidx.localbroadcastmanager/localbroadcastmanager
 }
