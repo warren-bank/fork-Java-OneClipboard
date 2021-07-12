@@ -131,7 +131,7 @@ public class ClipboardApplication extends Application {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, IntentUtil.getHomePageIntent(context), PendingIntent.FLAG_CANCEL_CURRENT);
 
         notificationBuilder = new NotificationCompat.Builder(context, getPackageName())
-                .setContentTitle("Oneclipboard")
+                .setContentTitle(getString(R.string.app_name))
                 .setSmallIcon(R.drawable.logo)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
