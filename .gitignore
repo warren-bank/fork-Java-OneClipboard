@@ -15,3 +15,5 @@ android-studio-project/.gradle
 android-studio-project/.idea
 android-studio-project/local.properties
 android-studio-project/gradle-local.properties
+
+!etc/bin

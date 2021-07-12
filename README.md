@@ -58,6 +58,7 @@ A collection of collaborative apps to automatically sync clipboards on remote de
 #   oneclipboardandroid/build/outputs/apk/release/oneclipboardandroid-release-unsigned.apk
 # ================================================
 ./gradlew :oneclipboardandroid:compileReleaseJavaWithJavac
+./gradlew :oneclipboardandroid:assembleRelease
 
 # ================================================
 # generate:
