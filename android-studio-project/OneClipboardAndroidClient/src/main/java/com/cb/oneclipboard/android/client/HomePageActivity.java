@@ -65,9 +65,10 @@ public class HomePageActivity extends Activity {
         ClipboardApplication app = (ClipboardApplication) getApplication();
 
         switch (item.getItemId()) {
-            case R.id.menu_quit:
-                stopService();
-                finish();
+            case R.id.menu_reconnect:
+                if (!app.isConnected()) {
+                    app.establishConnection();
+                }
                 return true;
             case R.id.menu_logout:
                 stopService();
@@ -75,6 +76,10 @@ public class HomePageActivity extends Activity {
                 app.pref.clear();
                 Intent login = new Intent(this, MainActivity.class);
                 startActivity(login);
+                return true;
+            case R.id.menu_quit:
+                stopService();
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

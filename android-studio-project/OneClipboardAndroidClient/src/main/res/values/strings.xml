@@ -3,8 +3,9 @@
 
     <string name="app_name">OneClipboard</string>
     <string name="login_instruction">Enter any username/password pair, and enter the same combination on your other devices.</string>
-    <string name="menu_quit">Quit</string>
+    <string name="menu_reconnect">Reconnect</string>
     <string name="menu_logout">Log Out</string>
+    <string name="menu_quit">Quit</string>
     <string name="server_host_label">Server Host</string>
     <string name="server_port_label">Server Port</string>
     <string name="username_label">Username</string>
