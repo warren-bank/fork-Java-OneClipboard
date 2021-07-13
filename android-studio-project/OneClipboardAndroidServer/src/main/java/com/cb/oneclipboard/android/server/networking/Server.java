@@ -81,7 +81,12 @@ public class Server {
 
         try {
             LOGGER.info("Stopping server...");
+
             serverSocket.close();
+
+            for (ServerThread serverThread : Registery.getClientSockets()) {
+                serverThread.close();
+            }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Stop failed!", e);
             OK = false;

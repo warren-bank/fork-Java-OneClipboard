@@ -4,6 +4,8 @@ import com.cb.oneclipboard.android.server.R;
 import com.cb.oneclipboard.android.server.utils.ResourceUtils;
 import com.cb.oneclipboard.android.server.networking.Server;
 
+import android.os.Process;
+
 public class NetworkingService extends BaseNetworkingService {
 
   @Override
@@ -14,6 +16,7 @@ public class NetworkingService extends BaseNetworkingService {
       @Override
       public void stopped() {
         stopInstance();
+        Process.killProcess(Process.myPid());
       }
     });
 
