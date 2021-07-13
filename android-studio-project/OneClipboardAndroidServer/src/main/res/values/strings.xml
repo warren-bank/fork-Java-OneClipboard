@@ -1,0 +1,9 @@
+<resources>
+  <string name="app_name">OneClipboard Server</string>
+
+  <!-- foreground service notification -->
+  <string name="notification_service_ticker">OneClipboard Server: service running</string>
+  <string name="notification_service_content_line1">OneClipboard Server running at:</string>
+  <string name="notification_service_content_line3">Click to stop service.</string>
+
+</resources>

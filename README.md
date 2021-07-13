@@ -23,7 +23,7 @@ A collection of collaborative apps to automatically sync clipboards on remote de
 
 #### Build Requirements
 
-1. Java 1.7+
+1. Java JDK 1.8+
 2. Gradle 4.10.1
 3. Android Build Tools 28.0.3
 
@@ -52,6 +52,35 @@ A collection of collaborative apps to automatically sync clipboards on remote de
 ./gradlew :OneClipboardDesktopClient:compileJava
 ./gradlew :OneClipboardDesktopClient:processResources
 ./gradlew :OneClipboardDesktopClient:izPackCreateInstaller
+
+# ================================================
+# generate:
+#   OneClipboardAndroidServer/build/outputs/apk/release/OneClipboardAndroidServer-release-unsigned.apk
+# ================================================
+./gradlew :OneClipboardAndroidServer:compileReleaseJavaWithJavac
+./gradlew :OneClipboardAndroidServer:assembleRelease
+
+# ================================================
+# generate:
+#   OneClipboardAndroidServer/build/outputs/apk/release/OneClipboardAndroidServer-release.apk
+# ================================================
+source ~/load-android-keystore-credentials.sh
+
+apk_dir='OneClipboardAndroidServer/build/outputs/apk/release'
+apk_src="${apk_dir}/OneClipboardAndroidServer-release-unsigned.apk"
+apk_dst="${apk_dir}/OneClipboardAndroidServer-release.apk"
+
+apksigner sign                      \
+  --v1-signing-enabled true         \
+  --v2-signing-enabled true         \
+  --v3-signing-enabled true         \
+  --ks "$keystore_file"             \
+  --ks-key-alias "$keystore_alias"  \
+  --ks-pass "pass:${keystore_pass}" \
+  --pass-encoding "utf-8"           \
+  --key-pass "pass:${key_pass}"     \
+  --out "$apk_dst"                  \
+  "$apk_src"
 
 # ================================================
 # generate:
@@ -85,7 +114,14 @@ apksigner sign                      \
 
 #### Installation Requirements
 
-1. Android 4.1 (Jelly Bean, API level 16)
+1. desktop server:
+   * Java JRE 1.7+
+2. desktop client:
+   * Java JRE 1.7+
+3. Android server:
+   * Android 1.0 (API level 1)
+4. Android client:
+   * Android 4.1 (Jelly Bean, API level 16)
 
 #### Installation Instructions
 
@@ -155,7 +191,15 @@ apksigner sign                      \
        # (3) run the desktop client using the /bin script provided for the shell (bash or Windows cmd)
        "${destination_dir}/bin/OneClipboardDesktopClient"
      ```
-3. Android client:
+3. Android server:
+   * with adb
+     ```bash
+       adb install 'OneClipboardAndroidServer/build/apk/OneClipboardAndroidServer-release.apk'
+     ```
+   * with httpd or ftpd
+     - download apk to Android device
+     - [sideload](https://phandroid.com/2013/07/20/android-101-sideloading-apps/) apk
+4. Android client:
    * with adb
      ```bash
        adb install 'OneClipboardAndroidClient/build/apk/OneClipboardAndroidClient-release.apk'
@@ -166,8 +210,8 @@ apksigner sign                      \
 
 #### Usage
 
-1. start the desktop server
-2. start any combination of 2+ clients
+1. start an instance of either server (ie: desktop or Android)
+2. start any combination of 2 or more clients
    - connect them all to the same server
    - enter the same username/password combination
 3. copy some text in one client
