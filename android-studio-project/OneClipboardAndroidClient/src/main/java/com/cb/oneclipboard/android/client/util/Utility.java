@@ -5,7 +5,7 @@ import com.cb.oneclipboard.lib.socket.ClipboardConnector;
 public class Utility {
   
   public static String getConnectionStatus(ClipboardConnector clipboardConnector) {
-    if( clipboardConnector.isConnected() ) {
+    if( clipboardConnector != null && clipboardConnector.isConnected() ) {
       return "Connected to " + clipboardConnector.getServerName();
     } else {
       return "Not connected.";

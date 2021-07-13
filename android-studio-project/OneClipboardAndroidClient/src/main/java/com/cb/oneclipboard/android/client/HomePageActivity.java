@@ -71,10 +71,11 @@ public class HomePageActivity extends Activity {
                 return true;
             case R.id.menu_logout:
                 stopService();
+                finish();
                 app.pref.clear();
                 Intent login = new Intent(this, MainActivity.class);
                 startActivity(login);
-                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

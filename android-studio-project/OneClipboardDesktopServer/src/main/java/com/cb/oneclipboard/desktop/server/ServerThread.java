@@ -68,7 +68,19 @@ public class ServerThread extends Thread {
             }
           }
         } else if (message.getMessageType() == MessageType.PING) {
-          // Ping received from client
+          if (message.getText().equals("ping")) {
+            try {
+              ServerThread.this.pong();
+            } catch (Exception e) {
+              LOGGER.log(Level.SEVERE, "Error in sending message", e);
+            }
+          }
+          else if (message.getText().equals("pong")) {
+            // TODO: stop timeout timer
+          }
+        } else if (message.getMessageType() == MessageType.DISCONNECT) {
+          close();
+          break;
         }
       }
 
@@ -88,6 +100,13 @@ public class ServerThread extends Thread {
 
   public void ping() throws Exception {
     send(new Message("ping", MessageType.PING, user));
+
+    // TODO: start timeout timer
+    //       close() when timer reaches 0
+  }
+
+  public void pong() throws Exception {
+    send(new Message("pong", MessageType.PING, user));
   }
 
   protected synchronized void send(Message message) throws Exception {

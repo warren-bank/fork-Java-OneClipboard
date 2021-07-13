@@ -74,6 +74,14 @@ public class ClipboardApplication extends Application {
         clipBoard.addPrimaryClipChangedListener(clipboardListener);
     }
 
+    public void removeClipboardListener() {
+        if (clipBoard != null && clipboardListener != null) {
+            clipBoard.removePrimaryClipChangedListener(clipboardListener);
+        }
+        clipBoard         = null;
+        clipboardListener = null;
+    }
+
     public boolean isConnected() {
         return clipboardConnector != null && clipboardConnector.isConnected();
     }
@@ -121,8 +129,22 @@ public class ClipboardApplication extends Application {
         }
     }
 
-    private void send(Message message) {
-        if (clipboardConnector != null) {
+    public void closeConnection() {
+        if (isConnected()) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    notificationBuilder = null;
+                    send(new Message("disconnect", MessageType.DISCONNECT, user));
+                    clipboardConnector.close();
+                    clipboardConnector = null;
+                }
+            }).start();
+        }
+    }
+
+    public void send(Message message) {
+        if (isConnected()) {
             clipboardConnector.send(message);
         }
     }

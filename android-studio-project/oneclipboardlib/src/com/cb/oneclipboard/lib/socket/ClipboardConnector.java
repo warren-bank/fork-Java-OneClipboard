@@ -3,6 +3,7 @@ package com.cb.oneclipboard.lib.socket;
 import com.cb.oneclipboard.lib.Message;
 import com.cb.oneclipboard.lib.MessageType;
 import com.cb.oneclipboard.lib.SocketListener;
+import com.cb.oneclipboard.lib.User;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
@@ -65,8 +66,8 @@ public class ClipboardConnector {
                     clientSocket = createSocket();
                     /*
                      * The objOutputStream needs to be created and flushed
-           * before the objInputStream can be created
-           */
+                     * before the objInputStream can be created
+                     */
                     objOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
                     objOutputStream.flush();
                     objInputStream = new ObjectInputStream(clientSocket.getInputStream());
@@ -127,10 +128,26 @@ public class ClipboardConnector {
                 listener.onMessageReceived(message);
                 break;
             case PING:
-                // Server is checking if connection is alive, ping back to say yes.
-                send(new Message("ping", MessageType.PING, message.getUser()));
+                if (message.getText().equals("ping")) {
+                    // Server is checking if connection is alive
+                    pong(message.getUser());
+                }
+                else if (message.getText().equals("pong")) {
+                    // TODO: stop timeout timer
+                }
                 break;
         }
+    }
+
+    public void ping(User user) {
+        send(new Message("ping", MessageType.PING, user));
+
+        // TODO: start timeout timer
+        //       close() when timer reaches 0
+    }
+
+    public void pong(User user) {
+        send(new Message("pong", MessageType.PING, user));
     }
 
     public void send(Message message) {

@@ -17,7 +17,7 @@ public class OneClipboardService extends Service {
   
   @Override
   public int onStartCommand( Intent intent, int flags, int startId ) {
-    Log.d( TAG, "onStartCommand called" );
+    Log.d( TAG, "called: onStartCommand" );
     
     showNotification();
     isRunning = true;
@@ -33,9 +33,11 @@ public class OneClipboardService extends Service {
   
   @Override
   public void onDestroy() {
+    super.onDestroy();
+
     hideNotification();
     isRunning = false;
-    super.onDestroy();
+    stop();
   }
 
   @Override
@@ -43,9 +45,14 @@ public class OneClipboardService extends Service {
     return null;
   }
 
-  public void start() {
+  private void start() {
     ( (ClipboardApplication) getApplicationContext() ).initializeClipboardListener();
     ( (ClipboardApplication) getApplicationContext() ).establishConnection();
+  }
+
+  private void stop() {
+    ( (ClipboardApplication) getApplicationContext() ).removeClipboardListener();
+    ( (ClipboardApplication) getApplicationContext() ).closeConnection();
   }
 
     // -------------------------------------------------------------------------

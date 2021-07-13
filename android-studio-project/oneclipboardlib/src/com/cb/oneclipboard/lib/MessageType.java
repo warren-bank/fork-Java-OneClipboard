@@ -4,5 +4,6 @@ public enum MessageType {
   REGISTER,
   CLIPBOARD_TEXT,
   PING,
+  DISCONNECT,
   ;
 }
