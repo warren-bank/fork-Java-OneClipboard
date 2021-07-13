@@ -17,7 +17,7 @@ public class ConnectionChangeReceiver extends BroadcastReceiver {
     NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
     
     if ( activeNetInfo != null && activeNetInfo.isConnected() && !app.isConnected() ) {
-      Log.d(TAG, "Connected to network.");
+      Log.d(TAG, "Connected to network");
       app.establishConnection();
     } else {
       Log.d(TAG, "Network connection unavailable");
