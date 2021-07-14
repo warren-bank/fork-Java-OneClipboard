@@ -1,8 +1,11 @@
 package com.cb.oneclipboard.desktop.client.gui;
 
-import javax.swing.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class ApplicationUI {
     private static final Logger LOG = Logger.getLogger(ApplicationUI.class.getName());

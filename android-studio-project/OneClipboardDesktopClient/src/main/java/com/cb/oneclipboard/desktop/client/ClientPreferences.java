@@ -1,6 +1,6 @@
 package com.cb.oneclipboard.desktop.client;
 
-import com.cb.oneclipboard.lib.ApplicationProperties;
+import com.cb.oneclipboard.lib.desktop.ApplicationProperties;
 
 import java.util.prefs.Preferences;
 

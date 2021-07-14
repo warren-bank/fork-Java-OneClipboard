@@ -1,6 +1,6 @@
 package com.cb.oneclipboard.android.client.util;
 
-import com.cb.oneclipboard.lib.socket.ClipboardConnector;
+import com.cb.oneclipboard.lib.client.socket.ClipboardConnector;
 
 public class Utility {
   

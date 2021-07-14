@@ -6,12 +6,20 @@ import com.cb.oneclipboard.desktop.client.ClientPreferences;
 import com.cb.oneclipboard.desktop.client.Utilities;
 import com.cb.oneclipboard.desktop.client.model.Credentials;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dialog.ModalityType;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JDialog;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+import javax.swing.JButton;
 
 public class LoginDialog extends JDialog {
     /**
@@ -25,7 +33,7 @@ public class LoginDialog extends JDialog {
     private ClientPreferences prefs = new ClientPreferences();
 
     public LoginDialog() {
-        super(null, java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        super(null, ModalityType.TOOLKIT_MODAL);
         String strVal;
 
         setModal(true);
@@ -37,7 +45,8 @@ public class LoginDialog extends JDialog {
         getContentPane().setLayout(null);
 
         JLabel lblEnterAnyUsernamepassword = new JLabel(
-                "<html>Enter any username/password pair,<br>and enter the same combination on your other devices.</html>");
+            "<html>Enter any username/password pair,<br>and enter the same combination on your other devices.</html>"
+        );
         lblEnterAnyUsernamepassword.setAlignmentY(Component.TOP_ALIGNMENT);
         lblEnterAnyUsernamepassword.setForeground(Color.WHITE);
         lblEnterAnyUsernamepassword.setBounds(10, -10, 365, 65);

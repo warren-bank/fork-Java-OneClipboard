@@ -16,9 +16,11 @@ version             = project.versionName
 mainClassName       = "com.cb.oneclipboard.desktop.server.Server"
 
 dependencies {
-    implementation project(':OneClipboardLib')
-    implementation 'org.apache.commons:commons-lang3:3.4'
+    implementation project(':OneClipboardLibCommon')
+    implementation project(':OneClipboardLibDesktop')
+    implementation project(':OneClipboardLibServer')
 
+    implementation 'org.apache.commons:commons-lang3:3.4'
     izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.5'
     testCompile 'junit:junit:4.12'
 }

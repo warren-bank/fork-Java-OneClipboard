@@ -1,10 +1,10 @@
 package com.cb.oneclipboard.android.client;
 
+import com.cb.oneclipboard.lib.client.Callback;
+
 import android.content.ClipboardManager;
 import android.content.ClipboardManager.OnPrimaryClipChangedListener;
 import android.util.Log;
-
-import com.cb.oneclipboard.lib.Callback;
 
 public class ClipboardListener implements OnPrimaryClipChangedListener {
   private static final String TAG = "ClipboardListener";

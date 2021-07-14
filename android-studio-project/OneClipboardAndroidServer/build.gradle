@@ -31,5 +31,6 @@ android {
 }
 
 dependencies {
-    implementation project(':OneClipboardLib')
+    implementation project(':OneClipboardLibCommon')
+    implementation project(':OneClipboardLibServer')
 }

@@ -1,98 +1,37 @@
 package com.cb.oneclipboard.desktop.server;
 
-import com.cb.oneclipboard.lib.ApplicationProperties;
-import com.cb.oneclipboard.lib.DefaultPropertyLoader;
-import com.cb.oneclipboard.desktop.server.admin.AdminServer;
-import com.cb.oneclipboard.desktop.server.logging.LevelBasedFileHandler;
+import com.cb.oneclipboard.desktop.server.networking.NetworkingServer;
 
-import javax.net.ssl.SSLContext;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.ServerSocket;
-import java.net.SocketException;
-import java.security.SecureRandom;
-import java.security.Security;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.cb.oneclipboard.lib.desktop.ApplicationProperties;
+import com.cb.oneclipboard.lib.desktop.DefaultPropertyLoader;
 
 public class Server {
-    public static final String[] PROP_LIST = {"config.properties"};
-    private final static Logger LOGGER = Logger.getLogger(Server.class.getName());
-    private static int serverPort;
-    private static ServerSocket serverSocket = null;
+    private static final String[] PROP_LIST = {"config.properties"};
+    private static boolean isShuttingDown = false;
 
-    public static void main(String[] args) throws Exception {
-        init(args);
-        start();
-    }
-
-    public static void start() {
-        Thread startupThread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    serverSocket = new ServerSocket(serverPort);
-                    LOGGER.info("Server started on port: " + serverPort);
-                } catch (Exception e) {
-                    // Port is in use.
-                    // Probably indicates that an instance of this program is already running in a different process.
-
-                    LOGGER.severe("Error starting server. Could not listen on port: " + serverPort);
-                    System.exit(-1);
-                }
-
-                while (true) {
-                    ServerThread serverThread = null;
-                    try {
-                        serverThread = new ServerThread(serverSocket.accept());
-                    } catch (SocketException e) {
-                        break; // exit loop
-                    } catch (Exception e) {
-                        try {
-                            serverThread.close();
-                        } catch (Exception ex) {
-                            LOGGER.log(Level.WARNING, "Unable to close server thread properly:\n" + ex.getMessage());
-                        }
-                        LOGGER.log(Level.WARNING, "Lost connection to client:\n" + e.getMessage());
-                    }
-                }
-            }
-        }, "Startup Thread");
-        startupThread.start();
-    }
-
-    public static boolean restart() {
-        try {
-            LOGGER.info("Restarting server...");
-            serverSocket.close();
-            start();
-            return true;
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Restart failed!", e);
-            return false;
-        }
-    }
-
-    private static void init(String[] args) throws SecurityException, IOException {
-        // set up loggers
-        Logger.getLogger("").addHandler(new LevelBasedFileHandler("%h/oneclipboardserver.log", Arrays.asList(Level.INFO, Level.WARNING)));
-        Logger.getLogger("").addHandler(new LevelBasedFileHandler("%h/oneclipboardserver.err", Arrays.asList(Level.SEVERE)));
-
+    public static void main(String[] args) {
         // Load properties
         ApplicationProperties.loadProperties(PROP_LIST, new DefaultPropertyLoader());
-        serverPort = ApplicationProperties.getIntProperty("server_port");
 
-        try {
-            // Start admin server
-            AdminServer.start(args);
-            ServerThreadCleaner.start(args);
+        int serverPort = ApplicationProperties.getIntProperty("server_port");
 
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error starting admin server", e);
-        } finally {
-        }
+        NetworkingServer.init(serverPort, new NetworkingServer.Callback(){
+            @Override
+            public void stopped() {
+                if (!isShuttingDown) {
+                    System.exit(0);
+                }
+            }
+        });
+
+        NetworkingServer.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                isShuttingDown = true;
+                NetworkingServer.stop();
+            }
+        });
     }
 
 }

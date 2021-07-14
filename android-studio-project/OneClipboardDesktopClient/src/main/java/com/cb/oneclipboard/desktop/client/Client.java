@@ -3,46 +3,44 @@ package com.cb.oneclipboard.desktop.client;
 import com.cb.oneclipboard.desktop.client.ApplicationConstants.Property;
 import com.cb.oneclipboard.desktop.client.gui.ApplicationUI;
 import com.cb.oneclipboard.desktop.client.model.Credentials;
-import com.cb.oneclipboard.lib.*;
-import com.cb.oneclipboard.lib.socket.ClipboardConnector;
 
-import javax.swing.*;
+import com.cb.oneclipboard.lib.common.*;
+import com.cb.oneclipboard.lib.client.*;
+import com.cb.oneclipboard.lib.client.socket.*;
+import com.cb.oneclipboard.lib.desktop.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.*;
-import java.security.Security;
+import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 public class Client implements PropertyChangeListener {
-    public static final String[] PROP_LIST = {"config.properties"};
-    private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
-    public static ApplicationPropertyChangeSupport propertyChangeSupport = new ApplicationPropertyChangeSupport();
-    static String lockFileName = System.getProperty("user.home") + File.separator + "oneclipboard.lock";
+    private static final String[] PROP_LIST = {"config.properties"};
+    private static final String lockFileName = System.getProperty("user.home") + File.separator + "oneclipboard.lock";
+    private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
+    private static final ApplicationUI ui = new ApplicationUI();
+
     private static Client client = null;
-    private static ApplicationUI ui = new ApplicationUI();
     private static ScheduledExecutorService scheduler = null;
     private static CipherManager cipherManager = null;
     private static User user = null;
     private ClipboardConnector clipboardConnector = null;
     private ClientPreferences prefs = new ClientPreferences();
 
-    public static void main(String[] args) {
-        // Set logging file location
-        String logFileLocation = System.getProperty("user.home") + File.separator + "onecliboarddesktop.log";
-        System.setProperty("java.util.logging.config.file", logFileLocation);
+    public static ApplicationPropertyChangeSupport propertyChangeSupport = new ApplicationPropertyChangeSupport();
 
+    public static void main(String[] args) {
         client = new Client();
         client.init();
     }
 
     public void init() {
-        //pipeSysoutToFile();
-
         try {
             SingleInstance.lock(lockFileName);
         } catch (Exception e) {
@@ -54,6 +52,12 @@ public class Client implements PropertyChangeListener {
         propertyChangeSupport.addPropertyChangeListener(this);
 
         ui.showLogin();
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                stop();
+            }
+        });
     }
 
     @Override
@@ -138,8 +142,8 @@ public class Client implements PropertyChangeListener {
 
                         @Override
                         public void onDisconnect() {
-                            // TODO Auto-generated method stub
-
+                            LOGGER.info("Lost connection to server");
+                            stop();
                         }
 
                     })
@@ -153,26 +157,25 @@ public class Client implements PropertyChangeListener {
 
     }
 
+    public boolean isConnected() {
+        return clipboardConnector != null && clipboardConnector.isConnected();
+    }
+
     public void stop() {
-        scheduler.shutdownNow();
-        clipboardConnector.close();
+        if (scheduler != null) {
+            scheduler.shutdownNow();
+        }
+
+        if (isConnected()) {
+            send(new Message("disconnect", MessageType.DISCONNECT, user));
+            clipboardConnector.close();
+        }
     }
 
     private void send(Message message) {
-        if (clipboardConnector != null) {
+        if (isConnected()) {
             clipboardConnector.send(message);
         }
     }
 
-    private void pipeSysoutToFile() {
-        try {
-            String logFileName = System.getProperty("user.home") + File.separator + "oneclipboard.log";
-            File file = new File(logFileName);
-            PrintStream printStream = new PrintStream(new FileOutputStream(file));
-            System.setOut(printStream);
-            System.setErr(printStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 }

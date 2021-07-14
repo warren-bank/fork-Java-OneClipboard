@@ -2,7 +2,7 @@ package com.cb.oneclipboard.android.server.service;
 
 import com.cb.oneclipboard.android.server.R;
 import com.cb.oneclipboard.android.server.utils.ResourceUtils;
-import com.cb.oneclipboard.android.server.networking.Server;
+import com.cb.oneclipboard.android.server.networking.NetworkingServer;
 
 import android.os.Process;
 
@@ -12,7 +12,7 @@ public class NetworkingService extends BaseNetworkingService {
   public void onCreate() {
     super.onCreate();
 
-    Server.init(getPortNumber(), new Server.Callback(){
+    NetworkingServer.init(getPortNumber(), new NetworkingServer.Callback(){
       @Override
       public void stopped() {
         stopInstance();
@@ -20,14 +20,14 @@ public class NetworkingService extends BaseNetworkingService {
       }
     });
 
-    Server.start();
+    NetworkingServer.start();
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
 
-    Server.stop();
+    NetworkingServer.stop();
   }
 
   // -------------------------------------------------------------------------

@@ -7,9 +7,9 @@ import java.util.concurrent.CountDownLatch;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.cb.oneclipboard.lib.Message;
-import com.cb.oneclipboard.lib.SocketListener;
-import com.cb.oneclipboard.lib.socket.ClipboardConnector;
+import com.cb.oneclipboard.lib.common.Message;
+import com.cb.oneclipboard.lib.client.socket.ClipboardConnector;
+import com.cb.oneclipboard.lib.client.socket.SocketListener;
 
 public class LoadTest {
   private static final int NO_OF_CLIENTS = 100;

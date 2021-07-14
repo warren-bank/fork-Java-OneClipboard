@@ -1,5 +1,11 @@
 package com.cb.oneclipboard.android.client;
 
+import com.cb.oneclipboard.android.client.util.IntentUtil;
+
+import com.cb.oneclipboard.lib.common.User;
+import com.cb.oneclipboard.lib.client.CipherManager;
+import com.cb.oneclipboard.lib.client.Util;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.cb.oneclipboard.lib.CipherManager;
-import com.cb.oneclipboard.lib.User;
-import com.cb.oneclipboard.lib.Util;
-import com.cb.oneclipboard.android.client.util.IntentUtil;
 
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getName();

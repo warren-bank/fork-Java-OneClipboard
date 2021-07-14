@@ -1,6 +1,6 @@
 package com.cb.oneclipboard.desktop.client;
 
-import com.cb.oneclipboard.lib.Callback;
+import com.cb.oneclipboard.lib.client.Callback;
 
 public class ClipboardPollTask implements Runnable{
   private String clipboardContent = null;

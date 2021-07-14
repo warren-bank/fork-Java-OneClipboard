@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+version = project.versionName
+
+dependencies {
+    implementation project(':OneClipboardLibCommon')
+
+    implementation 'org.jasypt:jasypt:1.9.2'
+}
+
+sourceSets.main.java.srcDirs = ['src']

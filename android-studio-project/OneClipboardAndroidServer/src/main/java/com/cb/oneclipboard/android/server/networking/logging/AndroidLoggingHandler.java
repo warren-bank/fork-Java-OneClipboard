@@ -1,7 +1,12 @@
 package com.cb.oneclipboard.android.server.networking.logging;
 
 import android.util.Log;
-import java.util.logging.*;
+
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.LogManager;
+import java.util.logging.LogRecord;
 
 /**
  * Make JUL work on Android.

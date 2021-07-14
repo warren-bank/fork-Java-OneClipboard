@@ -4,24 +4,33 @@ import com.cb.oneclipboard.desktop.client.ApplicationConstants.Property;
 import com.cb.oneclipboard.desktop.client.Client;
 import com.cb.oneclipboard.desktop.client.Utilities;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class Tray {
     private static final Logger LOG = Logger.getLogger(Tray.class.getName());
 
     public static void main(String[] args) {
-        /* Use an appropriate Look and Feel */
+        // Use an appropriate Look and Feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
         // Schedule a job for the event-dispatching thread:
         // adding TrayIcon.
         SwingUtilities.invokeLater(new Runnable() {
@@ -111,9 +120,7 @@ public class Tray {
                     sourceItem.setActionCommand(Property.STOP.name());
                     trayIcon.setImage(iconBlue);
                 }
-
                 Client.propertyChangeSupport.firePropertyChange(Property.valueOf(e.getActionCommand()), null, null);
-
             }
         });
     }

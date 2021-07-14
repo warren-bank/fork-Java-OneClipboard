@@ -1,5 +1,14 @@
-include ':OneClipboardLib'
+include ':OneClipboardLibCommon'
+include ':OneClipboardLibClient'
+include ':OneClipboardLibServer'
+include ':OneClipboardLibDesktop'
+
 include ':OneClipboardAndroidClient'
 include ':OneClipboardAndroidServer'
 include ':OneClipboardDesktopClient'
 include ':OneClipboardDesktopServer'
+
+project(':OneClipboardLibCommon' ).projectDir = new File(rootDir, 'OneClipboardLib/1-common')
+project(':OneClipboardLibClient' ).projectDir = new File(rootDir, 'OneClipboardLib/2-client')
+project(':OneClipboardLibServer' ).projectDir = new File(rootDir, 'OneClipboardLib/3-server')
+project(':OneClipboardLibDesktop').projectDir = new File(rootDir, 'OneClipboardLib/4-desktop')

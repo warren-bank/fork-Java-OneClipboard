@@ -1,5 +1,12 @@
 package com.cb.oneclipboard.android.client;
 
+import com.cb.oneclipboard.android.client.util.IntentUtil;
+import com.cb.oneclipboard.android.client.util.Utility;
+
+import com.cb.oneclipboard.lib.common.*;
+import com.cb.oneclipboard.lib.client.*;
+import com.cb.oneclipboard.lib.client.socket.*;
+
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,15 +16,6 @@ import android.content.Intent;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.cb.oneclipboard.lib.*;
-import com.cb.oneclipboard.lib.socket.ClipboardConnector;
-import com.cb.oneclipboard.android.client.util.IntentUtil;
-import com.cb.oneclipboard.android.client.util.Utility;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 public class ClipboardApplication extends Application {
     public static final int NOTIFICATION_ID = 1;

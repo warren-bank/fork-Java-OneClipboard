@@ -31,9 +31,12 @@ A collection of collaborative apps to automatically sync clipboards on remote de
 
 ```bash
 # ================================================
-# compile library shared by server and clients
+# compile libraries shared by server and clients
 # ================================================
-./gradlew :OneClipboardLib:compileJava
+./gradlew :OneClipboardLibCommon:compileJava
+./gradlew :OneClipboardLibClient:compileJava
+./gradlew :OneClipboardLibServer:compileJava
+./gradlew :OneClipboardLibDesktop:compileJava
 
 # ================================================
 # generate:
