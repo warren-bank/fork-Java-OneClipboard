@@ -124,7 +124,7 @@ apksigner sign                      \
 3. Android server:
    * Android 1.0 (API level 1)
 4. Android client:
-   * Android 4.1 (Jelly Bean, API level 16)
+   * Android 4.0 (Ice Cream Sandwich, API level 14)
 
 #### Installation Instructions
 

@@ -3,7 +3,7 @@
 rem :: run once
 if defined ANDROID_STUDIO_PROJECT exit /b 0
 
-set ONECLIPBOARD_VERSION=3.00.01
+set ONECLIPBOARD_VERSION=3.00.02
 
 set JDK_HOME=C:\Android\android-studio\jre
 set JRE_HOME=%JDK_HOME%\jre

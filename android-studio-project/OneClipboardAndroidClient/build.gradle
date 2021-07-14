@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId "com.cb.oneclipboard.android.client"
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode Integer.parseInt(project.versionCode, 10)
         versionName project.versionName
