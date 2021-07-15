@@ -13,4 +13,13 @@
     <string name="login">Login</string>
     <string name="home_page_message">Current clipboard text:</string>
 
+    <string name="tasker_config_radio_origin_heading">Clipboard changed:</string>
+    <string name="tasker_config_radio_origin_remote">Remotely</string>
+    <string name="tasker_config_radio_origin_local">Locally</string>
+    <string name="tasker_config_radio_origin_any">Either</string>
+
+    <string name="tasker_blurb_origin_remote">Event: Clipboard changed by server</string>
+    <string name="tasker_blurb_origin_local">Event: Clipboard changed by user</string>
+    <string name="tasker_blurb_origin_any">Event: Clipboard changed</string>
+
 </resources>

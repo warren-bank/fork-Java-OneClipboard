@@ -1,5 +1,6 @@
 package com.cb.oneclipboard.android.client;
 
+import com.cb.oneclipboard.android.client.tasker.TaskerIpc;
 import com.cb.oneclipboard.android.client.util.IntentUtil;
 import com.cb.oneclipboard.android.client.util.Utility;
 
@@ -65,6 +66,11 @@ public class ClipboardApplication extends Application {
                     @Override
                     public void run() {
                         send(new Message(cipherManager.encrypt(clipboardText), user));
+
+                        // trigger Tasker event
+                        sendBroadcast(
+                          TaskerIpc.getRequestQueryIntent(clipboardText, /* updatedRemotelyByServer */ false)
+                        );
                     }
                 }).start();
             }
@@ -104,6 +110,11 @@ public class ClipboardApplication extends Application {
                             Intent intent = new Intent(ClipboardApplication.CLIPBOARD_UPDATED);
                             intent.putExtra("message", clipboardText);
                             broadcaster.sendBroadcast(intent);
+
+                            // trigger Tasker event
+                            sendBroadcast(
+                              TaskerIpc.getRequestQueryIntent(clipboardText, /* updatedRemotelyByServer */ true)
+                            );
                         }
 
                         @Override

@@ -49,6 +49,28 @@
           </intent-filter>
         </receiver>
 
+        <!-- =============================================================== -->
+        <!-- Tasker integration: event plugin                                -->
+        <!-- =============================================================== -->
+
+        <activity
+            android:name=".tasker.ui.EditActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/logo"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="net.dinglisch.android.tasker.ACTION_EDIT_EVENT" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".tasker.receiver.QueryReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.QUERY_CONDITION" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

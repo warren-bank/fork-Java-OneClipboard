@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tasker_config_radiogroup_origin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    android:checkedButton="@id/tasker_config_radio_origin_any">
+
+    <TextView
+        android:id="@+id/tasker_config_radio_origin_heading"
+        android:text="@string/tasker_config_radio_origin_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioButton
+        android:id="@+id/tasker_config_radio_origin_remote"
+        android:text="@string/tasker_config_radio_origin_remote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioButton
+        android:id="@+id/tasker_config_radio_origin_local"
+        android:text="@string/tasker_config_radio_origin_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioButton
+        android:id="@+id/tasker_config_radio_origin_any"
+        android:text="@string/tasker_config_radio_origin_any"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RadioGroup>
