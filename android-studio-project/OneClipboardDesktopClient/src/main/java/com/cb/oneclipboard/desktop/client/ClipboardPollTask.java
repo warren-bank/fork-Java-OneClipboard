@@ -3,13 +3,14 @@ package com.cb.oneclipboard.desktop.client;
 import com.cb.oneclipboard.lib.client.Callback;
 
 public class ClipboardPollTask implements Runnable{
-  private String clipboardContent = null;
-  TextTransfer textTransfer;
-  Callback callback;
+  private TextTransfer textTransfer;
+  private Callback callback;
+  private String clipboardContent;
   
   public ClipboardPollTask(TextTransfer textTransfer, Callback callback){
-    this.callback = callback;
-    this.textTransfer = textTransfer;
+    this.textTransfer     = textTransfer;
+    this.callback         = callback;
+    this.clipboardContent = textTransfer.getClipboardContents();
   }
   
   @Override
