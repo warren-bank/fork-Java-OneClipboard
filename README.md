@@ -21,6 +21,59 @@ A collection of collaborative apps to automatically sync clipboards on remote de
     * an update to any one, will immediately update all
 * all clipboard text communicated between devices is encrypted over the network
 
+#### Usage
+
+1. start an instance of either server (ie: desktop or Android)
+2. start any combination of 2 or more clients
+   - connect them all to the same server
+   - enter the same username/password combination
+3. copy some text in one client
+4. paste the text in the other client(s)
+
+- - - - -
+
+#### Tasker Integration
+
+Android client integrates with Tasker to function as an event plugin.
+
+* configuration options:
+  - clipboard changed:
+    * remotely
+      - plugin will only fire an event when the clipboard is changed<br>
+        as the result of the client receiving data from the server
+    * locally
+      - plugin will only fire an event when the clipboard is changed<br>
+        as the result of the local user performing a copy operation,<br>
+        which has been sent to the server and dispersed to other clients
+    * either
+      - plugin will fire an event whenever the clipboard is changed,<br>
+        either remotely or locally
+* local variables:
+  - `%clip`
+    * value of the clipboard after an update occurs
+* additional notes:
+  - the Tasker event will only fire while the OneClipboard foreground service is running
+
+#### Tasker Usage Example #1
+
+* Tasker event:
+  - Plugin &gt; OneClipboard
+    * clipboard changed = remotely
+* Tasker action:
+  - Alert &gt; Popup
+    * title = `OneClipboard:`
+    * text  = `%clip`
+
+#### Tasker Usage Example #2
+
+* Tasker includes the action:
+  - System &gt; Set Clipboard
+* when this action executes,<br>OneClipboard will:
+  - detect the update (if the OneClipboard foreground service is running)
+  - forward the new value to the server (if connected)
+
+- - - - -
+
 #### Build Requirements
 
 1. Java JDK 1.8+
@@ -114,6 +167,8 @@ apksigner sign                      \
   --out "$apk_dst"                  \
   "$apk_src"
 ```
+
+- - - - -
 
 #### Installation Requirements
 
@@ -211,11 +266,6 @@ apksigner sign                      \
      - download apk to Android device
      - [sideload](https://phandroid.com/2013/07/20/android-101-sideloading-apps/) apk
 
-#### Usage
+- - - - -
 
-1. start an instance of either server (ie: desktop or Android)
-2. start any combination of 2 or more clients
-   - connect them all to the same server
-   - enter the same username/password combination
-3. copy some text in one client
-4. paste the text in the other client(s)
+#### License: [GPLv3](./LICENSE.txt)
