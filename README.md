@@ -93,8 +93,8 @@ Android client integrates with Tasker to function as an event plugin.
 
 # ================================================
 # generate:
-#   OneClipboardDesktopServer/build/distributions/OneClipboardDesktopServer-1.2.0.zip
-#   OneClipboardDesktopServer/build/distributions/OneClipboardDesktopServer-1.2.0-installer.jar
+#   OneClipboardDesktopServer/build/distributions/OneClipboardDesktopServer-3.01.01.zip
+#   OneClipboardDesktopServer/build/distributions/OneClipboardDesktopServer-3.01.01-installer.jar
 # ================================================
 ./gradlew :OneClipboardDesktopServer:compileJava
 ./gradlew :OneClipboardDesktopServer:processResources
@@ -102,8 +102,8 @@ Android client integrates with Tasker to function as an event plugin.
 
 # ================================================
 # generate:
-#   OneClipboardDesktopClient/build/distributions/OneClipboardDesktopClient-1.2.0.zip
-#   OneClipboardDesktopClient/build/distributions/OneClipboardDesktopClient-1.2.0-installer.jar
+#   OneClipboardDesktopClient/build/distributions/OneClipboardDesktopClient-3.01.01.zip
+#   OneClipboardDesktopClient/build/distributions/OneClipboardDesktopClient-3.01.01-installer.jar
 # ================================================
 ./gradlew :OneClipboardDesktopClient:compileJava
 ./gradlew :OneClipboardDesktopClient:processResources
@@ -186,7 +186,7 @@ apksigner sign                      \
 1. desktop server:
    * with the installer:
      ```bash
-       java -jar /path/to/OneClipboardDesktopServer-1.2.0-installer.jar
+       java -jar /path/to/OneClipboardDesktopServer-3.01.01-installer.jar
 
        # (1) specify the directory where the .zip file should be uncompressed
        # (2) choose whether or not to create desktop shortcuts, and such
@@ -200,7 +200,7 @@ apksigner sign                      \
          mkdir -p "$destination_dir"
        fi
 
-       unzip /path/to/OneClipboardDesktopServer-1.2.0.zip -d "$destination_dir"
+       unzip /path/to/OneClipboardDesktopServer-3.01.01.zip -d "$destination_dir"
 
        # (2) this configuration is optional;
        # setting the "user.home" property to a directory path that is relative to the program
@@ -211,7 +211,7 @@ apksigner sign                      \
          mkdir -p "$portable_data_dir"
        fi
 
-       export ONE_CLIPBOARD_SERVER_OPTS="-Duser.home=${portable_data_dir}"
+       export ONE_CLIPBOARD_DESKTOP_SERVER_OPTS="-Duser.home=${portable_data_dir}"
 
        # (3) run the desktop server using the /bin script provided for the shell (bash or Windows cmd)
        "${destination_dir}/bin/OneClipboardDesktopServer"
@@ -219,7 +219,7 @@ apksigner sign                      \
 2. desktop client:
    * with the installer:
      ```bash
-       java -jar /path/to/OneClipboardDesktopClient-1.2.0-installer.jar
+       java -jar /path/to/OneClipboardDesktopClient-3.01.01-installer.jar
 
        # (1) specify the directory where the .zip file should be uncompressed
        # (2) choose whether or not to create desktop shortcuts, and such
@@ -233,7 +233,7 @@ apksigner sign                      \
          mkdir -p "$destination_dir"
        fi
 
-       unzip /path/to/OneClipboardDesktopClient-1.2.0.zip -d "$destination_dir"
+       unzip /path/to/OneClipboardDesktopClient-3.01.01.zip -d "$destination_dir"
 
        # (2) this configuration is optional;
        # setting the "user.home" property to a directory path that is relative to the program
@@ -244,7 +244,7 @@ apksigner sign                      \
          mkdir -p "$portable_data_dir"
        fi
 
-       export ONE_CLIPBOARD_DESKTOP_OPTS="-Duser.home=${portable_data_dir}"
+       export ONE_CLIPBOARD_DESKTOP_CLIENT_OPTS="-Duser.home=${portable_data_dir}"
 
        # (3) run the desktop client using the /bin script provided for the shell (bash or Windows cmd)
        "${destination_dir}/bin/OneClipboardDesktopClient"
@@ -268,4 +268,4 @@ apksigner sign                      \
 
 - - - - -
 
-#### License: [GPLv3](./LICENSE.txt)
+#### License: [LGPL-3.0](./LICENSE.txt)
