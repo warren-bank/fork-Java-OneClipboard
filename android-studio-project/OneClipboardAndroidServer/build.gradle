@@ -22,6 +22,9 @@ android {
         targetSdkVersion 28
         versionCode Integer.parseInt(project.versionCode, 10)
         versionName project.versionName
+
+        archivesBaseName += "-$versionName"
+
         resValue("integer", "server_port", project.serverPort)
     }
 
