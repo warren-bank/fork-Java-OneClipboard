@@ -8,15 +8,17 @@ import com.cb.oneclipboard.lib.common.*;
 import com.cb.oneclipboard.lib.client.*;
 import com.cb.oneclipboard.lib.client.socket.*;
 
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class ClipboardApplication extends Application {
     public static final int NOTIFICATION_ID = 1;
@@ -159,13 +161,18 @@ public class ClipboardApplication extends Application {
     }
 
     public NotificationCompat.Builder getNotificationBuilder(Context context) {
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, IntentUtil.getHomePageIntent(context), PendingIntent.FLAG_CANCEL_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= 23)
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, IntentUtil.getHomePageIntent(context), flags);
 
         notificationBuilder = new NotificationCompat.Builder(context, getPackageName())
                 .setContentTitle(getString(R.string.app_name))
                 .setSmallIcon(R.drawable.logo)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE);
 
         return notificationBuilder;
     }

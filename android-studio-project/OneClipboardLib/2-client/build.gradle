@@ -6,7 +6,7 @@ version = project.versionName
 dependencies {
     implementation project(':OneClipboardLibCommon')
 
-    implementation 'org.jasypt:jasypt:1.9.2'
+    implementation 'org.jasypt:jasypt:1.9.3'                // https://mvnrepository.com/artifact/org.jasypt/jasypt
 }
 
 sourceSets.main.java.srcDirs = ['src']

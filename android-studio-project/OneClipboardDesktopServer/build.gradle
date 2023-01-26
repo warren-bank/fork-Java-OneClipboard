@@ -2,7 +2,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
     dependencies {
-        classpath 'com.bmuschko:gradle-izpack-plugin:2.1'
+        classpath 'com.bmuschko:gradle-izpack-plugin:3.1'             // https://mvnrepository.com/artifact/com.bmuschko/gradle-izpack-plugin
     }
 }
 
@@ -20,8 +20,10 @@ dependencies {
     implementation project(':OneClipboardLibDesktop')
     implementation project(':OneClipboardLibServer')
 
-    izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.5'
-    testCompile 'junit:junit:4.12'
+    izpack 'org.codehaus.izpack:izpack-standalone-compiler:4.3.5'     // https://mvnrepository.com/artifact/org.codehaus.izpack/izpack-standalone-compiler
+
+    testImplementation 'junit:junit:4.13.2'                           // https://mvnrepository.com/artifact/junit/junit
+    testImplementation project(':OneClipboardLibClient')
 }
 
 sourceSets.main.resources.srcDirs = ['src/main/resources']

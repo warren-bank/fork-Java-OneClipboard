@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".ClipboardApplication"
@@ -18,7 +19,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,7 +30,8 @@
         <activity
             android:name=".HomePageActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:exported="false">
         </activity>
 
         <service
@@ -37,16 +40,19 @@
             android:icon="@drawable/logo"
             android:logo="@drawable/logo"
             android:permission="android.permission.INTERNET"
+            android:foregroundServiceType="dataSync|connectedDevice"
+            android:stopWithTask="false"
             android:enabled="true"
-            android:stopWithTask="false">
+            android:exported="true">
         </service>
 
         <receiver
-          android:name=".ConnectionChangeReceiver"
-          android:label="NetworkConnection">
-          <intent-filter>
-            <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-          </intent-filter>
+            android:name=".ConnectionChangeReceiver"
+            android:label="NetworkConnection"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
         </receiver>
 
         <!-- =============================================================== -->

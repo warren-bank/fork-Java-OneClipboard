@@ -6,8 +6,11 @@ import com.cb.oneclipboard.lib.common.User;
 import com.cb.oneclipboard.lib.client.CipherManager;
 import com.cb.oneclipboard.lib.client.Util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -75,6 +78,8 @@ public class MainActivity extends Activity {
                 }
 
             });
+
+            requestPermissions();
         } else {
             startActivity(IntentUtil.getHomePageIntent(this));
             finish();
@@ -99,5 +104,13 @@ public class MainActivity extends Activity {
         }
 
         finish();
+    }
+
+    private void requestPermissions() {
+        if (Build.VERSION.SDK_INT >= 33) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 0);
+            }
+        }
     }
 }
