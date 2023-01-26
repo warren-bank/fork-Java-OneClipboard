@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,20 +42,29 @@ public class HomePageActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver((receiver), new IntentFilter(ClipboardApplication.CLIPBOARD_UPDATED));
 
-        // This is necessary as the textView won't be updated when the activity wasn't visible.
         final ClipboardManager clipBoard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-        TextView clipboardTextView = (TextView) findViewById(R.id.homePageText);
-        clipboardTextView.setText(clipBoard.getText());
+        final CharSequence     clipText  = clipBoard.getText();
+
+        if ((clipText != null) && (clipText.length() > 0)) {
+            // This is necessary because the textView won't be updated when the activity wasn't visible.
+            TextView clipboardTextView = (TextView) findViewById(R.id.homePageText);
+            clipboardTextView.setText(clipText);
+
+            // [Android 10+] This is necessary because ClipboardApplication.clipboardListener was NOT allowed to access this text when the activity wasn't visible.
+            if (Build.VERSION.SDK_INT >= 29) {
+                clipBoard.setText(clipText);
+            }
+        }
     }
 
     @Override
-    protected void onStop() {
+    protected void onPause() {
+        super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-        super.onStop();
     }
 
     @Override
